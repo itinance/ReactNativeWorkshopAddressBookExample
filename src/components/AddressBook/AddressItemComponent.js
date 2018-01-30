@@ -17,6 +17,8 @@ import {
 
 import {Actions} from 'react-native-router-flux'
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 export default class AddressItemComponent extends Component<{}> {
 
   constructor(props) {
@@ -49,6 +51,12 @@ export default class AddressItemComponent extends Component<{}> {
   save = () => {
     const address = this.buildAddressFromState();
 
+    console.log(this.props.saveAddress)
+    this.props.saveAddress( address )
+
+    return;
+    
+
     if(!address.id) {
         this.props.addAddress( address );
     } else {
@@ -63,11 +71,13 @@ export default class AddressItemComponent extends Component<{}> {
   }
 
   render() {
-      console.log("Render")
+      console.log("Render", this.props)
     
 
     return (
       <View style={styles.container}>
+
+        
 
         <View style={styles.inputRow}>
             <Text>Firstname</Text>
@@ -107,6 +117,8 @@ export default class AddressItemComponent extends Component<{}> {
                 <Text style={{color: 'white', fontWeight: 'bold'}}>Cancel</Text>
             </TouchableOpacity>
         </View>
+
+        <Spinner visible={this.props.saving} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
       </View>
     );
   }

@@ -4,6 +4,8 @@ import {ACTIONS} from '../actions';
 console.log("ACTIONS", ACTIONS);
 
 const initialState = {
+    saving: false,
+
     items: [
         {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1'},
         {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2'},
@@ -42,6 +44,13 @@ export default function(state = initialState, action = undefined) {
             return {
                 ...state,
                 items: newItems
+            }
+        }
+
+        case ACTIONS.STATE_SAVING: {
+            return {
+                ...state,
+                saving: action.saving
             }
         }
 

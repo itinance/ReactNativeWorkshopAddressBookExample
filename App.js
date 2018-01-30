@@ -29,7 +29,7 @@ import AddressItemContainer from './src/components/AddressBook/AddressItemContai
 class App extends Component<{}> {
 
   componentDidMount() {
-    setInterval( this.props.doTest, 1000 )
+    setInterval( this.props.doTest, 100000 )
   }
 
   renderRightButton() {
@@ -46,13 +46,14 @@ class App extends Component<{}> {
 
     return (
       <Router>
-          <Stack key="root">
+          <Stack key="root">            
             <Scene key="main" component={AddressListContainer} title="Addressbook"
               renderRightButton={this.renderRightButton}
             />
             <Scene key="addAddress" component={AddressItemContainer} title="Add new Address"/>
             <Scene key="editAddress" component={AddressItemContainer} title="Edit Address"/>
           </Stack>
+          
       </Router>      
     );
   }

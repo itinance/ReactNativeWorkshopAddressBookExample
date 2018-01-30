@@ -27,6 +27,10 @@ export default class AddressListComponent extends Component<{}> {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        console.log("RECEIVE ", nextProps)
+    }
+
     keyExtractor = (item, index) => item.id
 
     editAddress = (item) => {
