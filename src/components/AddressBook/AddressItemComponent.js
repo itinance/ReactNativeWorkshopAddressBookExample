@@ -22,21 +22,19 @@ export default class AddressItemComponent extends Component<{}> {
     return (
       <View style={styles.container}>
 
-        <View>
-            <View style={styles.inputRow}>
-                <Text>Firstname</Text>
-                <TextInput style={styles.input} />
-            </View>
+        <View style={styles.inputRow}>
+            <Text>Firstname</Text>
+            <TextInput style={styles.input} />
+        </View>
 
-            <View style={styles.inputRow}>
-                <Text>Lastname</Text>
-                <TextInput style={styles.input} />
-            </View>
+        <View style={styles.inputRow}>
+            <Text>Lastname</Text>
+            <TextInput style={styles.input} />
+        </View>
 
-            <View style={styles.inputRow}>
-                <Text>Street</Text>
-                <TextInput style={styles.input} />
-            </View>
+        <View style={styles.inputRow}>
+            <Text>Street</Text>
+            <TextInput style={styles.input} />
         </View>
 
         <View style={styles.buttonBar}> 
@@ -57,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: 20,
   },
   inputRow: {
     width: '80%',
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
   buttonBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '60%',
+    width: '80%',
   },
   saveBtn: {
     paddingHorizontal: 30,
@@ -78,7 +77,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'gray',
   },
   input: {
-    width: 300,
     height: 40,
     backgroundColor: 'lightgray',
   },
