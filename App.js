@@ -13,6 +13,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
+import {connect} from 'react-redux';
+
 import {
   Scene,
   Router,
@@ -24,8 +26,12 @@ import {
 import AddressListContainer from './src/components/AddressBook/AddressListContainer'
 import AddressItemContainer from './src/components/AddressBook/AddressItemContainer'
 
-export default class App extends Component<{}> {
-  
+class App extends Component<{}> {
+
+  componentDidMount() {
+    setInterval( this.props.doTest, 1000 )
+  }
+
   renderRightButton() {
     return (
       <TouchableOpacity onPress={Actions.addAddress} style={styles.rightButton}>
@@ -51,6 +57,15 @@ export default class App extends Component<{}> {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+});
+
+const mapActionsToProps = (dispatch, ownProps) => ({
+    doTest: () => dispatch({type: 'test'})
+});
+
+export default connect(mapStateToProps, mapActionsToProps)(App);
 
 const styles = StyleSheet.create({
   container: {

@@ -24,13 +24,12 @@ class AddressListContainer extends Component<{}> {
 
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        addresses: state.addressView.items,
-    }
-};
+const mapStateToProps = (state, ownProps) => ({
+    addresses: state.addressView.items,
+});
   
   const mapActionsToProps = (dispatch, ownProps) => ({
+      doTest: () => dispatch({type: 'test'})
   });
   
 export default connect(mapStateToProps, mapActionsToProps)(AddressListContainer);

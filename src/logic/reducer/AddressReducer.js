@@ -11,6 +11,9 @@ const initialState = {
     ]
 }
 
+let counter = 0
+
+
 export default function(state = initialState, action = undefined) {
 
     console.log("ACTION:", action)
@@ -24,9 +27,9 @@ export default function(state = initialState, action = undefined) {
         case ACTIONS.ADDRESS_REMOVE:
             return {
                 ...state,
-                items: state.items.filter( a => a.id != action.id )
+                items: state.items.filter( a => a.id !== action.id )
             }
-        case ACTIONS.ADDRESS_EDIT:
+        case ACTIONS.ADDRESS_EDIT: {
 
             const {address} = action;
 
@@ -34,12 +37,30 @@ export default function(state = initialState, action = undefined) {
             const i = state.items.findIndex( a => a.id === address.id )
             if(i < 0) return state;
 
-            newItems[i] = address;
+            newItems[i] = {...address};
 
             return {
                 ...state,
                 items: newItems
             }
+        }
+
+        case 'test': {
+            
+            let newItems = [ ...state.items ]
+
+            console.log(++counter)
+
+            newItems[1] = {
+                ...state.items[1],
+                street: 'Bahnhofsgasse ' + counter,
+            }
+
+            return {
+                ...state,
+                items: newItems
+            }
+        }
     }
 
     return state;
