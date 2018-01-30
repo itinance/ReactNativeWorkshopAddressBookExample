@@ -10,7 +10,9 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TextInput,
+  TouchableOpacity,
+  Dimensions
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux'
@@ -20,10 +22,31 @@ export default class AddressItemComponent extends Component<{}> {
     return (
       <View style={styles.container}>
 
-            <TouchableOpacity onPress={Actions.pop}>
-                <Text>BACK</Text>
-            </TouchableOpacity>
+        <View>
+            <View style={styles.inputRow}>
+                <Text>Firstname</Text>
+                <TextInput style={styles.input} />
+            </View>
 
+            <View style={styles.inputRow}>
+                <Text>Lastname</Text>
+                <TextInput style={styles.input} />
+            </View>
+
+            <View style={styles.inputRow}>
+                <Text>Street</Text>
+                <TextInput style={styles.input} />
+            </View>
+        </View>
+
+        <View style={styles.buttonBar}> 
+            <TouchableOpacity onPress={this.save} style={styles.saveBtn}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Save</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={Actions.pop} style={styles.cancelBtn}>
+                <Text style={{color: 'white', fontWeight: 'bold'}}>Cancel</Text>
+            </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -32,8 +55,31 @@ export default class AddressItemComponent extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  inputRow: {
+    width: '80%',
+    marginBottom: 20,
+  },
+  buttonBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '60%',
+  },
+  saveBtn: {
+    paddingHorizontal: 30,
+    paddingVertical: 8,
+    backgroundColor: 'blue',
+  },
+  cancelBtn: {
+    paddingHorizontal: 30,
+    paddingVertical: 8,
+    backgroundColor: 'gray',
+  },
+  input: {
+    width: 300,
+    height: 40,
+    backgroundColor: 'lightgray',
   },
 });
