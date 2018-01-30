@@ -11,9 +11,12 @@ import {
   Text,
   View,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 
 import AddressCardComponent from './AddressCardComponent';
+
+import {Actions} from 'react-native-router-flux';
 
 export default class AddressListComponent extends Component<{}> {
 
@@ -31,9 +34,17 @@ export default class AddressListComponent extends Component<{}> {
 
     keyExtractor = (item, index) => item.id
 
-    renderRow({item, _, index}) {
+    editAddress = (item) => {
+        __DEV__ && console.log('Edit address ', item);
+
+        Actions.editAddress( item );
+    }
+
+    renderRow = ({item, _, index}) => {
         return (
-            <AddressCardComponent {...item} />
+            <TouchableOpacity onPress={ () => this.editAddress(item) }>
+                <AddressCardComponent {...item} />
+            </TouchableOpacity>
         )
     }
 

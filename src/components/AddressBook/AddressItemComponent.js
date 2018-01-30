@@ -23,9 +23,9 @@ export default class AddressItemComponent extends Component<{}> {
     super(props);
 
     this.state = {
-        firstname: 'Peter',
-        lastname: 'Schulz',
-        street: 'Gartenstraße 1',
+        firstname: props.firstname || '',
+        lastname: props.lastname || '',
+        street: props.street || '',
     }
   }
 
