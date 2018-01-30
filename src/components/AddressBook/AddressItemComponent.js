@@ -118,7 +118,7 @@ export default class AddressItemComponent extends Component<{}> {
             </TouchableOpacity>
         </View>
 
-        <Spinner visible={this.props.saving} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
+        <Spinner visible={this.props.saving} textContent={"One Moment please..."} textStyle={{color: '#FFF'}} />
       </View>
     );
   }
