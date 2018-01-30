@@ -1,6 +1,9 @@
 import SQLite from 'react-native-sqlite-storage'
 
-SQLite.enablePromise(true);
+import {Alert} from 'react-native'
+
+SQLite.DEBUG();
+//SQLite.enablePromise(false);
 
 let db = null;
 
@@ -16,54 +19,96 @@ function openCB() {
     console.log("Database OPENED");
 }
   
+function __promisify( func ) {
+    return new Promise( (resolve, reject) => {
+        try {
+            func( tx => resolve(tx) );
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
 
-export function openDatabase() {
+function startTransaction(db) {
+    return new Promise( (resolve, reject) => {
+        try {
+            console.log("In StartTransaction")
+            db.transaction( tx => {
+                    console.log("CALLBACK", tx)
+                    resolve(tx) 
+                }
+            );
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+function executeSql(tx, sql, params = []) {
+    return new Promise( (resolve, reject) => {
+        try {
+            return tx.executeSql(sql, params, 
+                (tx, res) => resolve({tx, res}),
+                err => reject(err)
+            )
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+function errorCB(err) {
+    console.log("SQL Error: " + err);
+};
+  
+function successCB() {
+    console.log("SQL executed fine");
+};
+  
+function openCB() {
+    console.log("Database OPENED");
+};
+
+export async function openDatabase() {
     try {
+        console.log("openDatabase")
+        return new Promise( async (resolve, reject) => {
 
-        return new Promise( (resolve, reject) => {
+            console.log("openDatabase in Promise")
 
-            SQLite.openDatabase("test.db", "1.0", "Test Database", 200000, openCB, errorCB)
-            .then( (_db)=> {
-                db = _db;
-                return _db;
-            }).then( db => {
-                console.log(0, db)
-                return db.transaction()
-            }).then( tx => {
-                console.log(1, tx)
+            //db = SQLite.openDatabase({name : "testDB", createFromLocation : 1})
+            db = SQLite.openDatabase("testDB", "1.0", "Test Database", 200000, openCB, errorCB);
+
+            startTransaction( db )
+            .then( tx => {
+                return executeSql(tx, `
+CREATE TABLE IF NOT EXISTS address (
+    id INTEGER PRIMARY KEY AUTOINCREMENT, 
+    firstname TEXT NULL DEFAULT NULL,
+    lastname TEXT NULL DEFAULT NULL,
+    street TEXT NULL DEFAULT NULL
+)
+`, [])
+            }).then( () => startTransaction( db ) )
+            .then( tx => {
+                return executeSql(tx, 'SELECT * FROM address')
+            })
+            .then( ({res}) => {
+                console.log(2, res)
+                console.log(3, res.rows.length)
+
+                resolve(res)
             })
 
-            /*console.log(2, db);
-            db.transaction()
-                .then( tx => {
-                    console.log(1, tx)
-                })*/
-
-            return resolve();
-        
-            return db.transaction( tx => {
-/*                return tx.executeSql(
-                    "insert into address(firstname, lastname, street) values ('Erik', 'KOrt', 'Hofgasse 1');"
-                , [], 
-                (tx, a,b) => resolve(tx,a,b), 
-                (err) => reject(err) 
-                ) */
-
-                return tx.executeSql( `
-                CREATE TABLE IF NOT EXISTS address (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT, 
-                    firstname TEXT NULL DEFAULT NULL,
-                    lastname TEXT NULL DEFAULT NULL,
-                    street TEXT NULL DEFAULT NULL
-                )`, [], 
-                (tx, a,b) => resolve(tx,a,b), 
-                (err) => reject(err) 
-                )        
-            })
         })    
     }
     catch(err) {
+        console.log("#################################")
         console.log(err);
+        console.log("#################################")
     }
 }
 

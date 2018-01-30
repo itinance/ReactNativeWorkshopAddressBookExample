@@ -24,13 +24,13 @@ export default class AppContainer extends Component<{}> {
 
   async componentWillMount() {
 
-    await openDatabase()
+    const data = await openDatabase()
 
-    console.log(1234)
+    console.log(1234, data)
 
     return;
-    const data = await loadAddresses();
-    console.log("====", data)
+    const items = await loadAddresses();
+    console.log("====", items)
   }
 
   render() {
