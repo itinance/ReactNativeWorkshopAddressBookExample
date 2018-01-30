@@ -30,7 +30,7 @@ function __promisify( func ) {
     })
 }
 
-function startTransaction(db) {
+function startTransaction() {
     return new Promise( (resolve, reject) => {
         try {
             console.log("In StartTransaction")
@@ -82,7 +82,7 @@ export async function openDatabase() {
             //db = SQLite.openDatabase({name : "testDB", createFromLocation : 1})
             db = SQLite.openDatabase("testDB", "1.0", "Test Database", 200000, openCB, errorCB);
 
-            startTransaction( db )
+            startTransaction()
             .then( tx => {
                 return executeSql(tx, `
 CREATE TABLE IF NOT EXISTS address (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS address (
     street TEXT NULL DEFAULT NULL
 )
 `, [])
-            }).then( () => startTransaction( db ) )
+            }).then( startTransaction )
             .then( tx => {
                 return executeSql(tx, 'SELECT * FROM address')
             })
