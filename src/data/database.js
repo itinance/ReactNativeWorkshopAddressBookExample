@@ -83,8 +83,7 @@ export async function openDatabase() {
             db = SQLite.openDatabase("testDB", "1.0", "Test Database", 200000, openCB, errorCB);
 
             startTransaction()
-            .then( tx => {
-                return executeSql(tx, `
+            .then( tx => executeSql(tx, `
 CREATE TABLE IF NOT EXISTS address (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     firstname TEXT NULL DEFAULT NULL,
@@ -92,7 +91,7 @@ CREATE TABLE IF NOT EXISTS address (
     street TEXT NULL DEFAULT NULL
 )
 `, [])
-            }).then( startTransaction )
+            ).then( startTransaction )
             .then( tx => {
                 return executeSql(tx, 'SELECT * FROM address')
             })
