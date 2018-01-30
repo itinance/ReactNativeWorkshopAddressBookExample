@@ -9,13 +9,21 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
+
+import {Actions} from 'react-native-router-flux'
 
 export default class AddressItemComponent extends Component<{}> {
   render() {
     return (
       <View style={styles.container}>
+
+            <TouchableOpacity onPress={Actions.pop}>
+                <Text>BACK</Text>
+            </TouchableOpacity>
+
       </View>
     );
   }
