@@ -41,7 +41,7 @@ export default class App extends Component<{}> {
             <Scene key="main" component={AddressListComponent} title="Addressbook"
               renderRightButton={this.renderRightButton}
             />
-            <Scene initial={true} key="addAddress" component={AddressItemComponent} title="Address"/>
+            <Scene key="addAddress" component={AddressItemComponent} title="Address"/>
           </Stack>
       </Router>      
     );

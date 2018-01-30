@@ -9,14 +9,50 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  FlatList,
 } from 'react-native';
 
+import AddressCardComponent from './AddressCardComponent';
+
 export default class AddressListComponent extends Component<{}> {
-  render() {
-    return (
-      <View style={styles.container}>
-      </View>
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            addresses: [
+                {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1'},
+                {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2'},
+                {id: 3, firstname: 'Mike', lastname: 'Kaputze', street: 'Gasse 56'},
+            ]
+        }
+    }
+
+    keyExtractor = (item, index) => item.id
+
+    renderRow({item, _, index}) {
+        return (
+            <AddressCardComponent {...item} />
+        )
+    }
+
+    renderSeparator() {
+        return (
+            <View style={styles.separator}/>
+        )
+    }
+
+    render() {
+        return (
+        <View style={styles.container}>
+            <FlatList 
+                data={this.state.addresses}
+                keyExtractor={this.keyExtractor}
+                renderItem={this.renderRow}
+                ItemSeparatorComponent={this.renderSeparator}
+            />
+        </View>
     );
   }
 }
@@ -24,8 +60,13 @@ export default class AddressListComponent extends Component<{}> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'lightgray',
+    backgroundColor: 'white',
   },
+
+  separator: {
+    width: '90%',
+    marginLeft: '5%',
+    height: 1,
+    backgroundColor: 'lightgray',
+  }
 });
