@@ -10,7 +10,7 @@
     "generate-apk": "cd android && ./gradlew assembleRelease && open ./app/build/outputs/apk/",
     "install-apk": "cd android && ./gradlew installRelease && open ./app/build/outputs/apk/",
     "show-apk": "open android/app/build/outputs/apk",
-    "reset-adb": "adb kill-server && adb start-server",
+    "reset-adb": "adb kill-server && adb start-server"
   },
   "dependencies": {
     "react": "16.2.0",
