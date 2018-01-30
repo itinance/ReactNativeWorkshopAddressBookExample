@@ -18,8 +18,21 @@ import { Provider } from 'react-redux';
 import Store from './src/logic/Store';
 import App from './App'
 
+import {openDatabase, closeDatabase, loadAddresses} from './src/data/database';
+
 export default class AppContainer extends Component<{}> {
-  
+
+  async componentWillMount() {
+
+    await openDatabase()
+
+    console.log(1234)
+
+    return;
+    const data = await loadAddresses();
+    console.log("====", data)
+  }
+
   render() {
     return (
         <Provider store={Store}>
