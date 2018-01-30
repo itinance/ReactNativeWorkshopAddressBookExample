@@ -28,7 +28,7 @@ export default class App extends Component<{}> {
   
   renderRightButton() {
     return (
-      <TouchableOpacity onPress={null} style={styles.rightButton}>
+      <TouchableOpacity onPress={Actions.addAddress} style={styles.rightButton}>
         <Text>+</Text>
       </TouchableOpacity>
     )
@@ -41,7 +41,7 @@ export default class App extends Component<{}> {
             <Scene key="main" component={AddressListComponent} title="Addressbook"
               renderRightButton={this.renderRightButton}
             />
-            <Scene key="add" component={AddressItemComponent} title="Address"/>
+            <Scene key="addAddress" component={AddressItemComponent} title="Address"/>
           </Stack>
       </Router>      
     );
