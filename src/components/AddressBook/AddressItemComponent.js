@@ -18,23 +18,54 @@ import {
 import {Actions} from 'react-native-router-flux'
 
 export default class AddressItemComponent extends Component<{}> {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        firstname: 'Peter',
+        lastname: 'Schulz',
+        street: 'Gartenstraße 1',
+    }
+  }
+
+  setField = (name, value) => {
+      __DEV__ && console.log("Set " + name + ' to ' + value)
+
+      this.setState({[name]: value})
+  }
+
   render() {
+    console.log(this.state)
+
     return (
       <View style={styles.container}>
 
         <View style={styles.inputRow}>
             <Text>Firstname</Text>
-            <TextInput style={styles.input} />
+            <TextInput key="firstname"
+                style={styles.input} 
+                value={this.state.firstname}
+                onChangeText={ value => this.setField('firstname', value)}
+            />
         </View>
 
         <View style={styles.inputRow}>
             <Text>Lastname</Text>
-            <TextInput style={styles.input} />
+            <TextInput 
+                style={styles.input} 
+                value={this.state.lastname}            
+                onChangeText={ value => this.setField('lastname', value)}
+            />
         </View>
 
         <View style={styles.inputRow}>
             <Text>Street</Text>
-            <TextInput style={styles.input} />
+            <TextInput 
+                style={styles.input} 
+                value={this.state.street}            
+                onChangeText={ value => this.setField('street', value)}
+            />
         </View>
 
         <View style={styles.buttonBar}> 
