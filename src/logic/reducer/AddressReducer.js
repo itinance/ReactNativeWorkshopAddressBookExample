@@ -26,6 +26,20 @@ export default function(state = initialState, action = undefined) {
                 ...state,
                 items: state.items.filter( a => a.id != action.id )
             }
+        case ACTIONS.ADDRESS_EDIT:
+
+            const {address} = action;
+
+            let newItems = [ ...state.items ]
+            const i = state.items.findIndex( a => a.id === address.id )
+            if(i < 0) return state;
+
+            newItems[i] = address;
+
+            return {
+                ...state,
+                items: newItems
+            }
     }
 
     return state;

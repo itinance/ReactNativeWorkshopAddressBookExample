@@ -30,22 +30,6 @@ export default class AddressItemComponent extends Component<{}> {
     }
   }
 
-  componentWillMount() {
-    console.log("Will Mount")
-  }
-
-  componentDidMount() {
-    console.log("Did Mount")
-  }
-
-  componentWillUnmount() {
-      console.log("WIll unmount")
-  }
-
-  componentWillReceiveProps(nextProps) {
-      console.log("Nextprops");
-  }
-
   setField = (name, value) => {
       __DEV__ && console.log("Set " + name + ' to ' + value)
 
@@ -65,7 +49,11 @@ export default class AddressItemComponent extends Component<{}> {
   save = () => {
     const address = this.buildAddressFromState();
 
-    this.props.addAddress( address );
+    if(!address.id) {
+        this.props.addAddress( address );
+    } else {
+        this.props.editAddress( address );
+    }
     Actions.pop();
   }
 
