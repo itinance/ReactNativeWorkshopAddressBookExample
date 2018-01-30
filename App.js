@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  TouchableOpacity
 } from 'react-native';
 
 import {
@@ -24,12 +25,23 @@ import AddressListComponent from './src/components/AddressBook/AddressListCompon
 import AddressItemComponent from './src/components/AddressBook/AddressItemComponent'
 
 export default class App extends Component<{}> {
+  
+  renderRightButton() {
+    return (
+      <TouchableOpacity onPress={null} style={styles.rightButton}>
+        <Text>+</Text>
+      </TouchableOpacity>
+    )
+  }
+
   render() {
     return (
       <Router>
           <Stack key="root">
-            <Scene key="main" component={AddressListComponent} title="Addressbook"/>
-            <Scene key="register" component={AddressItemComponent} title="Address"/>
+            <Scene key="main" component={AddressListComponent} title="Addressbook"
+              renderRightButton={this.renderRightButton}
+            />
+            <Scene key="add" component={AddressItemComponent} title="Address"/>
           </Stack>
       </Router>      
     );
@@ -42,5 +54,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+
+  rightButton: {
+    width: 64,
+    height: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
