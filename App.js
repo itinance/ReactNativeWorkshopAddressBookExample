@@ -21,8 +21,8 @@ import {
   Stack,
 } from 'react-native-router-flux';
 
-import AddressListComponent from './src/components/AddressBook/AddressListComponent'
-import AddressItemComponent from './src/components/AddressBook/AddressItemComponent'
+import AddressListContainer from './src/components/AddressBook/AddressListContainer'
+import AddressItemContainer from './src/components/AddressBook/AddressItemContainer'
 
 export default class App extends Component<{}> {
   
@@ -35,14 +35,17 @@ export default class App extends Component<{}> {
   }
 
   render() {
+
+    console.log(this.props);
+
     return (
       <Router>
           <Stack key="root">
-            <Scene key="main" component={AddressListComponent} title="Addressbook"
+            <Scene key="main" component={AddressListContainer} title="Addressbook"
               renderRightButton={this.renderRightButton}
             />
-            <Scene key="addAddress" component={AddressItemComponent} title="Add new Address"/>
-            <Scene key="editAddress" component={AddressItemComponent} title="Edit Address"/>
+            <Scene key="addAddress" component={AddressItemContainer} title="Add new Address"/>
+            <Scene key="editAddress" component={AddressItemContainer} title="Edit Address"/>
           </Stack>
       </Router>      
     );

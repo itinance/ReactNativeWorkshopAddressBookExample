@@ -24,11 +24,6 @@ export default class AddressListComponent extends Component<{}> {
         super(props);
 
         this.state = {
-            addresses: [
-                {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1'},
-                {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2'},
-                {id: 3, firstname: 'Mike', lastname: 'Kaputze', street: 'Gasse 56'},
-            ]
         }
     }
 
@@ -58,7 +53,7 @@ export default class AddressListComponent extends Component<{}> {
         return (
         <View style={styles.container}>
             <FlatList 
-                data={this.state.addresses}
+                data={this.props.addresses}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderRow}
                 ItemSeparatorComponent={this.renderSeparator}
