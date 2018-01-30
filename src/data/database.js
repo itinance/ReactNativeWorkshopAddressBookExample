@@ -90,11 +90,9 @@ CREATE TABLE IF NOT EXISTS address (
     lastname TEXT NULL DEFAULT NULL,
     street TEXT NULL DEFAULT NULL
 )
-`, [])
-            ).then( startTransaction )
-            .then( tx => {
-                return executeSql(tx, 'SELECT * FROM address')
-            })
+`, []))
+            .then( startTransaction )
+            .then( tx => executeSql(tx, 'SELECT * FROM address') )
             .then( ({res}) => {
                 console.log(2, res)
                 console.log(3, res.rows.length)
