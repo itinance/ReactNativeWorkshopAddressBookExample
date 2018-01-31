@@ -11,8 +11,11 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
+
+import * as Animatable from 'react-native-animatable';
 
 import {connect} from 'react-redux';
 
@@ -44,17 +47,57 @@ class AppContainer extends Component<{}> {
     })*/
   }
 
+  clearError = () => {
+    
+
+    if(this.errorBox) {
+      this.errorBox.fadeOut().then( () => {
+        this.props.clearGlobalError()
+      })
+    }
+  }
+  
+
   render() {
+    const {errorMsg} = this.props;
+
     return (
+        <View style={{flex: 1}}>
           <App/>
+          {errorMsg ? (
+          <Animatable.View style={styles.errorBox} animation="fadeInUp" ref={ c => this.errorBox = c}>
+            <Text style={styles.errorText}>{errorMsg}</Text>
+            <TouchableOpacity onPress={this.clearError}>
+              <Text>Close</Text>
+            </TouchableOpacity>
+          </Animatable.View>
+          ) : null}
+        </View>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => ({
+  errorMsg: state.globalError.message,
 });
 
 //const loadAddresses = () => dispatch => dispatch({type: ACTIONS.ADDRESSES_RELOAD})
 
+const clearGlobalError = () => dispatch => dispatch({type: ACTIONS.GLOBAL_ERROR, error: ''})
 
-export default connect(mapStateToProps, {reloadAddresses})(AppContainer);
+export default connect(mapStateToProps, {reloadAddresses, clearGlobalError})(AppContainer);
+
+const styles = StyleSheet.create({
+  errorBox: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    backgroundColor: 'red',
+    minHeight: 100,
+    padding: '5%',
+  },
+
+  errorText: {
+    color: 'white',
+  }
+})

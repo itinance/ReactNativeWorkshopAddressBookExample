@@ -41,6 +41,7 @@ export default class AddressItemComponent extends Component<{}> {
 
   buildAddressFromState() {
     const {id, firstname, lastname, street, plz} = this.state;
+
     return {
         id,
         firstname,

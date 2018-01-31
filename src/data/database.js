@@ -97,6 +97,12 @@ export function closeDatabase() {
     SQLite.closeDatabase()
 }
 
+/**
+ * Create a new address record.
+ * 
+ * @param {object} address 
+ * @return {success: boolean, id: number}
+ */
 export function insertAddress(address) {
     const params = [
         address.firstname,

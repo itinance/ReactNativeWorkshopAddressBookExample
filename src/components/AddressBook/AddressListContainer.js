@@ -7,6 +7,7 @@ import {
 
 import {connect} from 'react-redux';
 
+import {ACTIONS} from 'AdressBook/src/logic/actions';
 import {reloadAddresses} from 'AdressBook/src/logic/thunk/saveAddress';
 
 import AddressListComponent from './AddressListComponent';
@@ -31,4 +32,6 @@ const mapStateToProps = (state, ownProps) => ({
     loading: state.addressView.loading,
 });
 
-export default connect(mapStateToProps, {reloadAddresses})(AddressListContainer);
+const setGlobalError = (error) => dispatch => dispatch({type: ACTIONS.GLOBAL_ERROR, error})
+
+export default connect(mapStateToProps, {reloadAddresses, setGlobalError})(AddressListContainer);

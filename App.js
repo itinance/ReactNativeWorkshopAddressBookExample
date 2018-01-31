@@ -49,7 +49,6 @@ class App extends Component<{}> {
             <Scene key="addAddress" component={AddressItemContainer} title="Add new Address"/>
             <Scene key="editAddress" component={AddressItemContainer} title="Edit Address"/>
           </Stack>
-          
       </Router>      
     );
   }

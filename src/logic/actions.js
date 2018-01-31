@@ -2,6 +2,8 @@
 import keymirror from 'keymirror';
 
 export const ACTIONS = keymirror({
+    GLOBAL_ERROR: null,
+
     ADDRESS_ADD: null,
     ADDRESS_REMOVE: null,
     ADDRESS_EDIT: null,

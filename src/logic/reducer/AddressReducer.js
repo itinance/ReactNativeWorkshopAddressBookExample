@@ -1,8 +1,6 @@
 
 import {ACTIONS} from '../actions';
 
-console.log("ACTIONS", ACTIONS);
-
 const initialState = {
     saving: false,
     loading: false,

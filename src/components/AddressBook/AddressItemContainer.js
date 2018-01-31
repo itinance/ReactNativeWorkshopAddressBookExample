@@ -16,8 +16,7 @@ import {saveAddress, deleteAddress} from 'AdressBook/src/logic/thunk/saveAddress
 class AddressItemContainer extends Component<{}> {
 
   constructor(props) {
-    super(props);
-    
+    super(props); 
   }
 
   render() {    
