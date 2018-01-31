@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps) => ({
     saving: state.addressView.saving,
 });
   
-const addAddress = (address) => dispatch => ({type: ACTIONS.ADDRESS_ADD, address})
+const addAddress = (address) => dispatch => dispatch({type: ACTIONS.ADDRESS_ADD, address})
 const editAddress= (address) => dispatch => dispatch({type: ACTIONS.ADDRESS_EDIT, address})
 const deleteAddress = (id) => dispatch => dispatch({type: ACTIONS.ADDRESS_REMOVE, id})
 

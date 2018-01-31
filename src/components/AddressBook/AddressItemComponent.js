@@ -51,11 +51,13 @@ export default class AddressItemComponent extends Component<{}> {
   save = () => {
     const address = this.buildAddressFromState();
 
-    console.log(this.props.saveAddress)
+    /*console.log(this.props.saveAddress)
     this.props.saveAddress( address )
 
-    return;
+    return;*/
     
+    console.log(1, address)
+    console.log(2, this.props)
 
     if(!address.id) {
         this.props.addAddress( address );
