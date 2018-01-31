@@ -67,7 +67,7 @@ function executeSql(tx : object, sql : string, params : Array<object> = []) : Pr
 export async function openDatabase() {
     try {
         return new Promise( (resolve, reject) => {
-            db = SQLite.openDatabase("testDB", "1.0", "Test Database", 200000, openCB, errorCB);
+            db = SQLite.openDatabase("testDB_01", "1.0", "Test Database", 200000, openCB, errorCB);
 
             startTransaction()
             .then( tx => executeSql(tx, `
@@ -75,7 +75,8 @@ CREATE TABLE IF NOT EXISTS address (
     id INTEGER PRIMARY KEY AUTOINCREMENT, 
     firstname TEXT NULL DEFAULT NULL,
     lastname TEXT NULL DEFAULT NULL,
-    street TEXT NULL DEFAULT NULL
+    street TEXT NULL DEFAULT NULL,
+    plz TEXT NULL DEFAULT NULL
 )
 `, []))
             .then( ({res}) => {
@@ -108,11 +109,12 @@ export function insertAddress(address) {
         address.firstname,
         address.lastname,
         address.street,
+        address.plz
     ];
 
     return startTransaction()
     .then( tx => executeSql(tx, `
-        INSERT INTO address (firstname, lastname, street) VALUES (?, ?, ?)
+        INSERT INTO address (firstname, lastname, street, plz) VALUES (?, ?, ?, ?)
         `, params ) )
     .then( ({res}) => {
         return {
@@ -133,12 +135,13 @@ export function updateAddress(address) {
         address.firstname,
         address.lastname,
         address.street,
+        address.plz,
         address.id
     ];
 
     return startTransaction()
     .then( tx => executeSql(tx, `
-        UPDATE address SET firstname=?, lastname=?, street=? WHERE id=?
+        UPDATE address SET firstname=?, lastname=?, street=?, plz=? WHERE id=?
         `, params ) )
     .then( ({res}) => {
         console.log("AFTER Update", res)
