@@ -18,17 +18,24 @@ import AddressCardComponent from './AddressCardComponent';
 
 import {Actions} from 'react-native-router-flux';
 
+import Spinner from 'react-native-loading-spinner-overlay';
+
 export default class AddressListComponent extends Component<{}> {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            refreshing: false,
         }
     }
 
     componentWillReceiveProps(nextProps) {
         console.log("RECEIVE ", nextProps)
+
+        if(this.props.loading === true && ! nextProps.loading) {
+            this.setState({refreshing: false})
+        }
     }
 
     keyExtractor = (item, index) => item.id
@@ -53,15 +60,25 @@ export default class AddressListComponent extends Component<{}> {
         )
     }
 
+    doRefresh = () => {
+        console.log("REFRESHING****************************")
+
+        this.setState({refreshing: true})
+        this.props.reloadAddresses();
+    }
+
     render() {
         return (
         <View style={styles.container}>
             <FlatList 
+                refreshing={this.state.refreshing}
+                onRefresh={this.doRefresh}
                 data={this.props.addresses}
                 keyExtractor={this.keyExtractor}
                 renderItem={this.renderRow}
                 ItemSeparatorComponent={this.renderSeparator}
             />
+            <Spinner visible={this.props.loading} textContent={"Loading..."} textStyle={{color: '#FFF'}} />
         </View>
     );
   }

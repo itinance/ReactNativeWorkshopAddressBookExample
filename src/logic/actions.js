@@ -10,6 +10,7 @@ export const ACTIONS = keymirror({
     ADDRESSES_RELOAD: null,
 
     STATE_SAVING: null,
+    STATE_LOADING: null,
 })
 
 

@@ -7,6 +7,8 @@ import {
 
 import {connect} from 'react-redux';
 
+import {reloadAddresses} from 'AdressBook/src/logic/thunk/saveAddress';
+
 import AddressListComponent from './AddressListComponent';
 
 class AddressListContainer extends Component<{}> {
@@ -26,10 +28,7 @@ class AddressListContainer extends Component<{}> {
 
 const mapStateToProps = (state, ownProps) => ({
     addresses: state.addressView.items,
+    loading: state.addressView.loading,
 });
-  
-const mapActionsToProps = (dispatch, ownProps) => ({
-    doTest: () => dispatch({type: 'test'})
-});
-  
-export default connect(mapStateToProps, mapActionsToProps)(AddressListContainer);
+
+export default connect(mapStateToProps, {reloadAddresses})(AddressListContainer);

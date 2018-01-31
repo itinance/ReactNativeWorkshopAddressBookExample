@@ -20,7 +20,7 @@ import {ACTIONS} from 'AdressBook/src/logic/actions';
 import App from './App'
 
 import {reloadAddresses} from './src/logic/thunk/saveAddress';
-import {openDatabase, closeDatabase, insertAddress} from './src/data/database';
+import {openDatabase} from './src/data/database';
 
 class AppContainer extends Component<{}> {
 

@@ -5,6 +5,7 @@ console.log("ACTIONS", ACTIONS);
 
 const initialState = {
     saving: false,
+    loading: false,
 
     items: [
         {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1'},
@@ -62,6 +63,13 @@ export default function(state = initialState, action = undefined) {
             }
         }
 
+        case ACTIONS.STATE_LOADING: {
+            return {
+                ...state,
+                loading: action.loading
+            }
+        }
+        
         case 'test': {
             
             let newItems = [ ...state.items ]

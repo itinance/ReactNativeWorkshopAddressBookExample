@@ -4,9 +4,21 @@ import {ACTIONS} from 'AdressBook/src/logic/actions';
 import * as Database from 'AdressBook/src/data/database';
 
 export function reloadAddresses() {
-    return dispatch => {
+    return async dispatch => {
+        dispatch({type: ACTIONS.STATE_LOADING, loading: true})
+
+
+        await timeout(1000);
+
         Database.loadAddresses()
-        .then( addresses => dispatch({type: ACTIONS.ADDRESSES_ASSIGN, addresses}) )
+        .then( addresses => {
+            dispatch({type: ACTIONS.ADDRESSES_ASSIGN, addresses}) 
+            dispatch({type: ACTIONS.STATE_LOADING, loading: false})
+        })
+        .catch( err => {
+            console.log(err)
+            dispatch({type: ACTIONS.STATE_LOADING, loading: false})
+        })
     }
 }
 
