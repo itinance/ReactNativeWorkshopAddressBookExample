@@ -8,37 +8,21 @@ SQLite.DEBUG();
 let db = null;
 
 function errorCB(err) {
-    console.log("SQL Error: " + err);
+    __DEV__ && console.log("*** SQL Error: ", err);
 }
   
 function successCB() {
-    console.log("SQL executed fine");
+    __DEV__ && console.log("*** SQL executed fine");
 }
   
 function openCB() {
-    console.log("Database OPENED");
+    __DEV__ && console.log("*** Database OPENED");
 }
   
-function __promisify( func ) {
-    return new Promise( (resolve, reject) => {
-        try {
-            func( tx => resolve(tx) );
-        }
-        catch(err) {
-            reject(err);
-        }
-    })
-}
-
 function startTransaction() {
     return new Promise( (resolve, reject) => {
         try {
-            console.log("In StartTransaction")
-            db.transaction( tx => {
-                    console.log("CALLBACK", tx)
-                    resolve(tx) 
-                }
-            );
+            db.transaction( tx => resolve(tx) );
         }
         catch(err) {
             reject(err);
@@ -49,7 +33,7 @@ function startTransaction() {
 function executeSql(tx, sql, params = []) {
     return new Promise( (resolve, reject) => {
         try {
-            return tx.executeSql(sql, params, 
+            tx.executeSql(sql, params, 
                 (tx, res) => resolve({tx, res}),
                 err => reject(err)
             )
@@ -60,22 +44,10 @@ function executeSql(tx, sql, params = []) {
     })
 }
 
-function errorCB(err) {
-    console.log("SQL Error: " + err);
-};
-  
-function successCB() {
-    console.log("SQL executed fine");
-};
-  
-function openCB() {
-    console.log("Database OPENED");
-};
-
 export async function openDatabase() {
     try {
         console.log("openDatabase")
-        return new Promise( async (resolve, reject) => {
+        return new Promise( (resolve, reject) => {
 
             console.log("openDatabase in Promise")
 
