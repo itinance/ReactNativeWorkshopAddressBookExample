@@ -25,7 +25,6 @@ class AddressItemContainer extends Component<{}> {
           <AddressItemComponent {...this.props} />
       )
   }
-
 }
 
 const mapStateToProps = (state, ownProps) => ({

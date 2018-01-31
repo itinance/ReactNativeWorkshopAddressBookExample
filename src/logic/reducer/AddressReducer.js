@@ -8,9 +8,9 @@ const initialState = {
     loading: false,
 
     items: [
-        {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1'},
-        {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2'},
-        {id: 3, firstname: 'Mike', lastname: 'Kaputze', street: 'Gasse 56'},
+        {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1', plz: '06108'},
+        {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2', plz: '12345'},
+        {id: 3, firstname: 'Mike', lastname: 'Kaputze', street: 'Gasse 56', plz: '98765'},
     ]
 }
 
@@ -70,22 +70,6 @@ export default function(state = initialState, action = undefined) {
             }
         }
         
-        case 'test': {
-            
-            let newItems = [ ...state.items ]
-
-            console.log(++counter)
-
-            newItems[1] = {
-                ...state.items[1],
-                street: 'Bahnhofsgasse ' + counter,
-            }
-
-            return {
-                ...state,
-                items: newItems
-            }
-        }
     }
 
     return state;
