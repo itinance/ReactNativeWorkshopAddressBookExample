@@ -18,11 +18,21 @@ function successCB() {
 function openCB() {
     __DEV__ && console.log("*** Database OPENED");
 }
-  
-function startTransaction() {
+
+const READONLY = true;
+
+/**
+ * Start a transaction / readonly-transaction depending on readOnly-flag
+ * 
+ * @param {boolean} readOnly 
+ */
+function startTransaction(readOnly : boolean = false) {
     return new Promise( (resolve, reject) => {
         try {
-            db.transaction( tx => resolve(tx) );
+            readOnly ? 
+                db.readTransaction( tx => resolve(tx) )
+                :
+                db.transaction( tx => resolve(tx) );
         }
         catch(err) {
             reject(err);
@@ -30,7 +40,13 @@ function startTransaction() {
     })
 }
 
-function executeSql(tx, sql, params = []) {
+/**
+ * 
+ * @param object tx 
+ * @param string sql 
+ * @param Array<object> params 
+ */
+function executeSql(tx : object, sql : string, params : Array<object> = []) : Promise {
     return new Promise( (resolve, reject) => {
         try {
             tx.executeSql(sql, params, 
@@ -46,12 +62,7 @@ function executeSql(tx, sql, params = []) {
 
 export async function openDatabase() {
     try {
-        console.log("openDatabase")
         return new Promise( (resolve, reject) => {
-
-            console.log("openDatabase in Promise")
-
-            //db = SQLite.openDatabase({name : "testDB", createFromLocation : 1})
             db = SQLite.openDatabase("testDB", "1.0", "Test Database", 200000, openCB, errorCB);
 
             startTransaction()
@@ -63,15 +74,12 @@ CREATE TABLE IF NOT EXISTS address (
     street TEXT NULL DEFAULT NULL
 )
 `, []))
-            .then( startTransaction )
-            .then( tx => executeSql(tx, 'SELECT * FROM address') )
             .then( ({res}) => {
-                console.log(2, res)
-                console.log(3, res.rows.length)
-
-                resolve(res)
+                resolve(true);
             })
-
+            .catch( err => {
+                reject(err)
+            })
         })    
     }
     catch(err) {
@@ -81,11 +89,11 @@ CREATE TABLE IF NOT EXISTS address (
     }
 }
 
-export async function closeDatabase() {
-    await SQLite.closeDatabase()
+export function closeDatabase() {
+    SQLite.closeDatabase()
 }
 
-export async function insertAddress(address) {
+export function insertAddress(address) {
 
     const params = [
         address.firstname,
@@ -93,23 +101,23 @@ export async function insertAddress(address) {
         address.street,
     ];
 
-    await db.transaction( tx => {
-        return tx.executeSql( `
-INSERT INTO address (firstname, lastname, street) VALUES (?, ?, ?)
-`, params )
+    return startTransaction()
+    .then( tx => {
+        executeSql(tx, `
+        INSERT INTO address (firstname, lastname, street) VALUES (?, ?, ?)
+        `, params )
+    })
+}
+
+export function deleteAddress(id) {
+    return startTransaction()
+    .then( tx => {
+        executeSql(tx, 'DELETE FROM address WHERE id=?', params )
     })
 
 }
 
-export async function deleteAddress(id) {
-    await db.transaction( tx => {
-        return tx.executeSql( `
-DELETE FROM address WHERE id=?
-`, [id] )
-    })
-}
-
-export async function updateAddress(address) {
+export function updateAddress(address) {
     const params = [
         address.firstname,
         address.lastname,
@@ -117,22 +125,23 @@ export async function updateAddress(address) {
         address.id
     ];
 
-    await db.transaction( tx => {
-        return tx.executeSql( `
-UPDATE address SET firstname=?, lastname=?, street=? WHERE id=?
-`, params )
+    return startTransaction()
+    .then( tx => {
+        executeSql(tx, `
+        UPDATE address SET firstname=?, lastname=?, street=? WHERE id=?
+        `, params )
     })
 }
 
-export function loadAddresses() {
-    return new Promise( (resolve, reject) => {
-        return db.readTransaction( tx => {
-            return tx.executeSql( 'SELECT * FROM address', [], (tx, {rows}) => {
-                if(rows.length == 0) resolve([])
-                resolve( _readRowsFromDbResultAsArray(rows) );
-            })
-        })
-    })   
+export function loadAddresses( mapBy = null ) {
+    return startTransaction( READONLY )
+    .then( tx => executeSql( tx, 'SELECT * FROM address', [] ))
+    .then( ({res}) => {
+        if(typeof res.rows === 'object') {
+            return _readRowsFromDbResultAsArray(res.rows, mapBy)
+        }
+        return []
+    })
 }
 
 function _readRowsFromDbResultAsArray( rows, mapBy = null ) : array {

@@ -6,6 +6,7 @@
 
 import React, { Component } from 'react';
 import {
+  Alert,
   Platform,
   StyleSheet,
   Text,
@@ -18,19 +19,26 @@ import { Provider } from 'react-redux';
 import Store from './src/logic/Store';
 import App from './App'
 
-import {openDatabase, closeDatabase, loadAddresses} from './src/data/database';
+import {openDatabase, closeDatabase, loadAddresses, insertAddress} from './src/data/database';
 
 export default class AppContainer extends Component<{}> {
 
   async componentWillMount() {
 
-    const data = await openDatabase()
+    try {
+        await openDatabase()
+    } catch(err) {
+        Alert.alert('Error', err.message)
+    }
 
-    console.log(1234, data)
-
-    return;
     const items = await loadAddresses();
     console.log("====", items)
+
+    await insertAddress({
+      firstname: 'Olaf',
+      lastname: 'Ludwig',
+      street: 'Tonne 1'
+    })
   }
 
   render() {
