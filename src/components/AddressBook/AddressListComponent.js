@@ -31,9 +31,7 @@ export default class AddressListComponent extends Component<{}> {
     }
 
     componentDidMount() {
-
         setTimeout( () => this.props.setGlobalError( 'Error XYZ'), 500 )
-        
     }
 
     componentWillReceiveProps(nextProps) {

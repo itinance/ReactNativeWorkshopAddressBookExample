@@ -28,7 +28,6 @@ import {openDatabase} from './src/data/database';
 class AppContainer extends Component<{}> {
 
   async componentWillMount() {
-
     try {
         await openDatabase()
     } catch(err) {
@@ -48,15 +47,12 @@ class AppContainer extends Component<{}> {
   }
 
   clearError = () => {
-    
-
     if(this.errorBox) {
       this.errorBox.fadeOut().then( () => {
         this.props.clearGlobalError()
       })
     }
   }
-  
 
   render() {
     const {errorMsg} = this.props;
@@ -65,7 +61,7 @@ class AppContainer extends Component<{}> {
         <View style={{flex: 1}}>
           <App/>
           {errorMsg ? (
-          <Animatable.View style={styles.errorBox} animation="fadeInUp" ref={ c => this.errorBox = c}>
+          <Animatable.View style={styles.errorBox} animation="slideInUp" ref={ c => this.errorBox = c}>
             <Text style={styles.errorText}>{errorMsg}</Text>
             <TouchableOpacity onPress={this.clearError}>
               <Text>Close</Text>
@@ -80,8 +76,6 @@ class AppContainer extends Component<{}> {
 const mapStateToProps = (state, ownProps) => ({
   errorMsg: state.globalError.message,
 });
-
-//const loadAddresses = () => dispatch => dispatch({type: ACTIONS.ADDRESSES_RELOAD})
 
 const clearGlobalError = () => dispatch => dispatch({type: ACTIONS.GLOBAL_ERROR, error: ''})
 

@@ -6,8 +6,6 @@ const initialState = {
 
 export default function(state = initialState, action = undefined) {
 
-    console.log("ACTION:", action)
-
     switch(action.type) {
         case ACTIONS.GLOBAL_ERROR: {
             return {

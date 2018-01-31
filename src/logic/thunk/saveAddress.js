@@ -7,7 +7,6 @@ export function reloadAddresses() {
     return async dispatch => {
         dispatch({type: ACTIONS.STATE_LOADING, loading: true})
 
-
         await timeout(1000);
 
         Database.loadAddresses()
@@ -26,11 +25,8 @@ export function saveAddress(address, callback) {
     return async dispatch => {
         dispatch({type: ACTIONS.STATE_SAVING, saving: true})
 
-        console.log("Save", address)
         const isNew = ! address.id
-        console.log("IsNew", isNew)
         const func = isNew ? Database.insertAddress : Database.updateAddress;
-        console.log("FUNC", func)
 
         func(address)
         .then( ({success, id}) => {

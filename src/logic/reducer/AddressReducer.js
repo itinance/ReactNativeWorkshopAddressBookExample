@@ -6,9 +6,13 @@ const initialState = {
     loading: false,
 
     items: [
-        {id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1', plz: '06108'},
+
+        // if you need example data:
+        
+        /*{id: 1, firstname: 'Alf', lastname: 'Zuckerbacke', street: 'Alpenstraße 1', plz: '06108'},
         {id: 2, firstname: 'Mark', lastname: 'Zuckerschnute', street: 'Bahnhofsgasse 2', plz: '12345'},
         {id: 3, firstname: 'Mike', lastname: 'Kaputze', street: 'Gasse 56', plz: '98765'},
+        */
     ]
 }
 

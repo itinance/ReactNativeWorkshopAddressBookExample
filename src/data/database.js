@@ -67,7 +67,7 @@ function executeSql(tx : object, sql : string, params : Array<object> = []) : Pr
 export async function openDatabase() {
     try {
         return new Promise( (resolve, reject) => {
-            db = SQLite.openDatabase("testDB_01", "1.0", "Test Database", 200000, openCB, errorCB);
+            db = SQLite.openDatabase("testDB_02", "1.0", "Test Database", 200000, openCB, errorCB);
 
             startTransaction()
             .then( tx => executeSql(tx, `
