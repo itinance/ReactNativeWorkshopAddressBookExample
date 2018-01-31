@@ -21,6 +21,14 @@ export default function(state = initialState, action = undefined) {
     console.log("ACTION:", action)
 
     switch(action.type) {
+
+        case ACTIONS.ADDRESSES_ASSIGN: {
+            return {
+                ...state,
+                items: action.addresses
+            }
+        }
+
         case ACTIONS.ADDRESS_ADD:
             return {
                 ...state,

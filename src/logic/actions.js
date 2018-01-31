@@ -6,7 +6,8 @@ export const ACTIONS = keymirror({
     ADDRESS_REMOVE: null,
     ADDRESS_EDIT: null,
 
-    ADDRESS_RELOAD: null,
+    ADDRESSES_ASSIGN: null,
+    ADDRESSES_RELOAD: null,
 
     STATE_SAVING: null,
 })

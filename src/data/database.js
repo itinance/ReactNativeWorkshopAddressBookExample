@@ -49,8 +49,12 @@ function startTransaction(readOnly : boolean = false) {
 function executeSql(tx : object, sql : string, params : Array<object> = []) : Promise {
     return new Promise( (resolve, reject) => {
         try {
+            console.log("SQL: ", sql, params)
             tx.executeSql(sql, params, 
-                (tx, res) => resolve({tx, res}),
+                (tx, res) => {
+                    //console.log("After execute:", res)
+                    resolve({tx, res})
+                },
                 err => reject(err)
             )
         }
@@ -94,7 +98,6 @@ export function closeDatabase() {
 }
 
 export function insertAddress(address) {
-
     const params = [
         address.firstname,
         address.lastname,
@@ -102,19 +105,21 @@ export function insertAddress(address) {
     ];
 
     return startTransaction()
-    .then( tx => {
-        executeSql(tx, `
+    .then( tx => executeSql(tx, `
         INSERT INTO address (firstname, lastname, street) VALUES (?, ?, ?)
-        `, params )
-    })
+        `, params ) )
+    .then( ({res}) => {
+        return {
+            success: res.insertId > 0,
+            id: res.insertId
+        }
+    });
 }
 
 export function deleteAddress(id) {
     return startTransaction()
-    .then( tx => {
-        executeSql(tx, 'DELETE FROM address WHERE id=?', params )
-    })
-
+    .then( tx => executeSql(tx, 'DELETE FROM address WHERE id=?', [id] ) )
+    .then( Promise.resolve(true) )
 }
 
 export function updateAddress(address) {
@@ -126,10 +131,12 @@ export function updateAddress(address) {
     ];
 
     return startTransaction()
-    .then( tx => {
-        executeSql(tx, `
+    .then( tx => executeSql(tx, `
         UPDATE address SET firstname=?, lastname=?, street=? WHERE id=?
-        `, params )
+        `, params ) )
+    .then( ({res}) => {
+        console.log("AFTER Update", res)
+        return {success: res.rowsAffected > 0};
     })
 }
 

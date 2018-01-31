@@ -14,14 +14,15 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { Provider } from 'react-redux';
+import {connect} from 'react-redux';
 
-import Store from './src/logic/Store';
+import {ACTIONS} from 'AdressBook/src/logic/actions';
 import App from './App'
 
-import {openDatabase, closeDatabase, loadAddresses, insertAddress} from './src/data/database';
+import {reloadAddresses} from './src/logic/thunk/saveAddress';
+import {openDatabase, closeDatabase, insertAddress} from './src/data/database';
 
-export default class AppContainer extends Component<{}> {
+class AppContainer extends Component<{}> {
 
   async componentWillMount() {
 
@@ -31,22 +32,29 @@ export default class AppContainer extends Component<{}> {
         Alert.alert('Error', err.message)
     }
 
-    const items = await loadAddresses();
+    this.props.reloadAddresses()
+
+    /*const items = await loadAddresses();
     console.log("====", items)
 
     await insertAddress({
       firstname: 'Olaf',
       lastname: 'Ludwig',
       street: 'Tonne 1'
-    })
+    })*/
   }
 
   render() {
     return (
-        <Provider store={Store}>
           <App/>
-        </Provider>
     );
   }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+});
+
+//const loadAddresses = () => dispatch => dispatch({type: ACTIONS.ADDRESSES_RELOAD})
+
+
+export default connect(mapStateToProps, {reloadAddresses})(AppContainer);

@@ -51,10 +51,8 @@ export default class AddressItemComponent extends Component<{}> {
   save = () => {
     const address = this.buildAddressFromState();
 
-    /*console.log(this.props.saveAddress)
-    this.props.saveAddress( address )
-
-    return;*/
+    this.props.saveAddress( address, Actions.pop )
+    return;
     
     console.log(1, address)
     console.log(2, this.props)

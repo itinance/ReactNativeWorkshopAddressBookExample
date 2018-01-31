@@ -28,8 +28,8 @@ const mapStateToProps = (state, ownProps) => ({
     addresses: state.addressView.items,
 });
   
-  const mapActionsToProps = (dispatch, ownProps) => ({
-      doTest: () => dispatch({type: 'test'})
-  });
+const mapActionsToProps = (dispatch, ownProps) => ({
+    doTest: () => dispatch({type: 'test'})
+});
   
 export default connect(mapStateToProps, mapActionsToProps)(AddressListContainer);

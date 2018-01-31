@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "watchman-reset": "watchman watch-del-all",
+    "hard-reset": "rm -rf node_modules/ && watchman watch-del-all && yarn install",
+    "hard-reset-total": "rm -rf node_modules/ && yarn cache clean && watchman watch-del-all && yarn install",
+    "start": "node node_modules/react-native/local-cli/cli.js start --reset-cache",
     "test": "jest",
     "android-device": "adb reverse tcp:8081 tcp:8081 && react-native run-android",
     "lint": "jslint **.js",

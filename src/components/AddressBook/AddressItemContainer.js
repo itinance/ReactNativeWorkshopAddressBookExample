@@ -11,7 +11,7 @@ import {ACTIONS} from 'AdressBook/src/logic/actions';
 
 import AddressItemComponent from './AddressItemComponent';
 
-import saveAddress from 'AdressBook/src/logic/thunk/saveAddress';
+import {saveAddress, deleteAddress} from 'AdressBook/src/logic/thunk/saveAddress';
 
 class AddressItemContainer extends Component<{}> {
 
@@ -32,8 +32,4 @@ const mapStateToProps = (state, ownProps) => ({
     saving: state.addressView.saving,
 });
   
-const addAddress = (address) => dispatch => dispatch({type: ACTIONS.ADDRESS_ADD, address})
-const editAddress= (address) => dispatch => dispatch({type: ACTIONS.ADDRESS_EDIT, address})
-const deleteAddress = (id) => dispatch => dispatch({type: ACTIONS.ADDRESS_REMOVE, id})
-
-export default connect(mapStateToProps, {saveAddress, addAddress, editAddress, deleteAddress})(AddressItemContainer);
+export default connect(mapStateToProps, {saveAddress, deleteAddress})(AddressItemContainer);
