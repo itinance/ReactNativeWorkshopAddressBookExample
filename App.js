@@ -28,10 +28,6 @@ import AddressItemContainer from './src/components/AddressBook/AddressItemContai
 
 class App extends Component<{}> {
 
-  componentDidMount() {
-    setInterval( this.props.doTest, 100000 )
-  }
-
   renderRightButton() {
     return (
       <TouchableOpacity onPress={Actions.addAddress} style={styles.rightButton}>
@@ -63,7 +59,6 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapActionsToProps = (dispatch, ownProps) => ({
-    doTest: () => dispatch({type: 'test'})
 });
 
 export default connect(mapStateToProps, mapActionsToProps)(App);

@@ -29,6 +29,7 @@ export default class AddressItemComponent extends Component<{}> {
         firstname: props.firstname || '',
         lastname: props.lastname || '',
         street: props.street || '',
+        plz: props.plz || '',
     }
   }
 
@@ -39,12 +40,13 @@ export default class AddressItemComponent extends Component<{}> {
   }
 
   buildAddressFromState() {
-    const {id, firstname, lastname, street} = this.state;
+    const {id, firstname, lastname, street, plz} = this.state;
     return {
         id,
         firstname,
         lastname,
-        street
+        street,
+        plz
     }
   }
 
@@ -105,6 +107,15 @@ export default class AddressItemComponent extends Component<{}> {
                 style={styles.input} 
                 value={this.state.street}            
                 onChangeText={ value => this.setField('street', value)}
+            />
+        </View>
+
+        <View style={styles.inputRow}>
+            <Text>Plz</Text>
+            <TextInput 
+                style={styles.input} 
+                value={this.state.plz}            
+                onChangeText={ value => this.setField('plz', value)}
             />
         </View>
 

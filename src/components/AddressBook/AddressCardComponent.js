@@ -17,12 +17,12 @@ export default class AddressCardComponent extends Component<{}> {
   }
 
   render() {    
-      const {id, firstname, lastname, street} = this.props;
+      const {id, firstname, lastname, street, plz} = this.props;
 
       return (
           <View style={styles.container}>
             <Text style={styles.name}>{lastname} {firstname}</Text>
-            <Text style={styles.address}>{street}</Text>
+            <Text style={styles.address}>{street} {plz}</Text>
           </View>
       )
   }
