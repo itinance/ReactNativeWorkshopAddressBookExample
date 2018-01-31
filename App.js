@@ -25,13 +25,14 @@ import {
 
 import AddressListContainer from './src/components/AddressBook/AddressListContainer'
 import AddressItemContainer from './src/components/AddressBook/AddressItemContainer'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class App extends Component<{}> {
 
   renderRightButton() {
     return (
       <TouchableOpacity onPress={Actions.addAddress} style={styles.rightButton}>
-        <Text>+</Text>
+        <Icon name="plus" size={20} color="gray" />
       </TouchableOpacity>
     )
   }

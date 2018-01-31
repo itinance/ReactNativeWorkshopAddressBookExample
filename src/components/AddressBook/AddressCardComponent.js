@@ -6,6 +6,7 @@ import {
   // Dimensions,
 } from 'react-native';
 
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // const DEVICE_WIDTH = Dimensions.get('window').width;
 
@@ -13,7 +14,6 @@ export default class AddressCardComponent extends Component<{}> {
 
   constructor(props) {
     super(props);
-    
   }
 
   render() {    
@@ -21,8 +21,11 @@ export default class AddressCardComponent extends Component<{}> {
 
       return (
           <View style={styles.container}>
-            <Text style={styles.name}>{lastname} {firstname}</Text>
-            <Text style={styles.address}>{street} {plz}</Text>
+            <View style={{flexDirection: 'column'}}>
+              <Text style={styles.name}>{lastname} {firstname}</Text>
+              <Text style={styles.address}>{street} {plz}</Text>
+            </View>
+            <Icon name="chevron-right" size={12} color="gray" />
           </View>
       )
   }
@@ -33,8 +36,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
+    flexDirection: 'row',
+    
+
+    justifyContent: 'space-between',
+    alignItems: 'center',
     
     paddingHorizontal: '5%',
     paddingVertical: 20,

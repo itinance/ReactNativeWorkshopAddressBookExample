@@ -7,7 +7,7 @@ export function reloadAddresses() {
     return async dispatch => {
         dispatch({type: ACTIONS.STATE_LOADING, loading: true})
 
-        await timeout(1000);
+        //await timeout(1000);
 
         Database.loadAddresses()
         .then( addresses => {
